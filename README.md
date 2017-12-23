@@ -90,6 +90,7 @@
 3. 把FastDfsFileStorage.java复制到com.haulmont.cuba.core.app.filestorage.jmyida
 4. 创建一个Entity名字：modelplatform$FastDFSFile
 参考cuba-fastdfs-entity.png
+![](https://github.com/jimuyida/fastdfs-java-client/blob/master/cuba-fastdfs-entity.png)
 
 5. 测试
 在界面上拖放一个上传控件,然后java代码如下：
