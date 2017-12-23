@@ -88,3 +88,38 @@
     ```
 
 3. 把FastDfsFileStorage.java复制到com.haulmont.cuba.core.app.filestorage.jmyida
+4. 创建一个Entity名字：modelplatform$FastDFSFile
+参考cuba-fastdfs-entity.png
+
+5. 测试
+在界面上拖放一个上传控件,然后java代码如下：
+```java
+
+    @Inject
+    private FileUploadingAPI fileStorageAPI;
+    @Inject
+    private FileUploadField upload;
+    @Inject
+    private DataSupplier dataSupplier;
+    @Inject
+    private FileUploadingAPI fileUploadingAPI;
+
+    @Override
+    public void init(Map<String, Object> params) {
+        upload.addFileUploadSucceedListener(event -> {
+            FileDescriptor fd = upload.getFileDescriptor();
+            try {
+                // save file to FileStorage
+                fileUploadingAPI.putFileIntoStorage(upload.getFileId(), fd);
+            } catch (FileStorageException e) {
+                throw new RuntimeException("Error saving file to FileStorage", e);
+            }
+            // save file descriptor to database
+            dataSupplier.commit(fd);
+            showNotification("文件上传成功: " + upload.getFileName(), NotificationType.HUMANIZED);
+        });
+
+        upload.addFileUploadErrorListener(event ->
+                showNotification("File upload error", NotificationType.HUMANIZED));
+    }
+``

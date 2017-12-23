@@ -55,11 +55,11 @@ public class FastDfsFileStorage implements FileStorageAPI/* ,BeanPostProcessor*/
                 FastDFSFile fastDFSFile = metadata.create(FastDFSFile.class);
                 fastDFSFile.setGroup(fastDfsInfo.getGroup());
                 fastDFSFile.setFileName(fastDfsInfo.getPath());
-                /*FileInfo fileInfo = storageClient.query_file_info(files[0],files[1]);
-                fastDFSFile.setCrc((int) fileInfo.getCrc32());
-                fastDFSFile.setFileSize(fileInfo.getFileSize());
-                fastDFSFile.setSourceIpAddr(fileInfo.getSourceIpAddr());
-                fastDFSFile.setCreateTimestamp(fileInfo.getCreateTimestamp());*/
+                /*FileInfo fileInfo = storageClient.query_file_info(files[0],files[1]);*/
+                fastDFSFile.setCrc((int) fastDfsInfo.getFileInfo().getCrc32());
+                fastDFSFile.setFileSize(fastDfsInfo.getFileInfo().getFileSize());
+                fastDFSFile.setSourceIpAddr(fastDfsInfo.getFileInfo().getSourceIpAddr());
+                fastDFSFile.setCreateTimestamp(fastDfsInfo.getFileInfo().getCreateTimestamp());
                 fastDFSFile.setFileDescriptorId(fileDescr.getId());
                 persistence.getEntityManager().persist(fastDFSFile);
                 tx.commit();
